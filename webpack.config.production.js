@@ -7,15 +7,11 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const theme = require("./src/js/config/antOverride");
-
-// console.log(theme);
 module.exports = {
   entry: "./src/js/index.jsx",
   output: {
-    // filename: "bundle.js",
     filename: "[name].[hash].js",
     path: path.resolve(__dirname, "dist")
   },
@@ -29,55 +25,19 @@ module.exports = {
         loader: "babel-loader"
       },
       {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader"
-        ]
+        test: /\.(css)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader']
+        })
       },
       {
-        test: /\.(css|scss)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              importLoaders: 2,
-              sourceMap: true
-            }
-          },
-          {
-            loader: "sass-loader",
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
+        test: /\.(scss)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
       },
-
-      {
-        test: /\.(css|less)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              importLoaders: 2,
-              sourceMap: true
-            }
-          },
-
-          {
-            loader: "less-loader",
-            options: {
-              sourceMap: true,
-              javascriptEnabled: true,
-              modifyVars: theme
-            }
-          }
-        ]
-      },
-
       {
         test: /\.(jpeg|bmp|png|svg|jpg|gif)$/,
         use: ["file-loader"]
@@ -92,15 +52,14 @@ module.exports = {
     new SimpleProgressPlugin(),
     new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
-      title: "Webpack 4 Development With hot module replacement",
+      title: "React-Redux-Boilerplate",
       template: "src/index.html"
     }),
     new webpack.NamedModulesPlugin(),
     new BundleAnalyzerPlugin(),
     new CopyWebpackPlugin([{ from: "src/assets", to: "assets" }]),
-    // })
-    new MiniCssExtractPlugin({
-      filename: "style.css"
+    new ExtractTextPlugin({
+      filename: 'style.css'
     })
   ],
   optimization: {

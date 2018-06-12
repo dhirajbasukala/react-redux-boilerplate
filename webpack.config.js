@@ -5,13 +5,14 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const SimpleProgressPlugin = require("webpack-simple-progress-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const theme = require('./src/js/config/antOverride');
-// const Linter =  {
-//   enforce: 'pre',
-//   test: /\.jsx?$/,
-//   exclude: ['node_modules'],
-//   loader: 'eslint-loader'
-// };
+const eslintLoader = {
+  enforce: 'pre',
+  test: /\.jsx?$/,
+  exclude: ['node_modules'],
+  loader: 'eslint-loader'
+};
+
+const linter = process.env.LINTER === 'true' ? eslintLoader : {};
 
 module.exports = {
   mode: "development",
@@ -48,11 +49,10 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: "style-loader"
+            loader: 'style-loader'
           },
           {
-            loader: "css-loader",
-            options: { sourceMap: true }
+            loader: 'css-loader'
           }
         ]
       },
@@ -60,40 +60,13 @@ module.exports = {
         test: /\.scss$/,
         use: [
           {
-            loader: "style-loader"
+            loader: 'style-loader'
           },
           {
-            loader: "css-loader",
-            options: {
-              sourceMap: true
-            }
+            loader: 'css-loader'
           },
           {
-            loader: "sass-loader",
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.less$/,
-        use: [
-          {
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader",
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: "less-loader",
-            options: {
-              javascriptEnabled: true,
-              modifyVars: theme
-            }
+            loader: 'sass-loader'
           }
         ]
       },
@@ -104,7 +77,8 @@ module.exports = {
       {
         test: /\.(woff|woff2|ttf|eot|svg)(\?]?.*)?$/,
         loader: "url-loader"
-      }
+      },
+      linter
     ]
   },
   plugins: [
