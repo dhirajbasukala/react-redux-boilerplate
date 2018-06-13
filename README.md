@@ -1,9 +1,9 @@
-#React Redux Boilerplate with webpack
+#This is a React Redux Boilerplate. Following are underlying major libraries included.
 
 This boiler plate includes: 
-1. React (16.3.1) 
-2. Redux
-3. Redux-saga
-4. Ant-design
+1. react (16.4) 
+2. react-router-dom
+2. redux
+3. redux-saga
 5. Jest 
 

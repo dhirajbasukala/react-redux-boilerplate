@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import autoBind from "auto-bind";
 import { getViewport } from "../../utils";
-import "./style.scss";
 
 class Home extends Component {
   constructor(props) {
@@ -35,7 +34,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <h1>Home</h1>
+        <h1>Home Sweet Home</h1>
       </div>
     );
   }
