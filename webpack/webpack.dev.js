@@ -16,6 +16,7 @@ const linter = process.env.LINTER === 'true' ? eslintLoader : {};
 const devConfig = merge(common, {
   mode: 'development',
   entry: [
+    '@babel/polyfill',
     'react-hot-loader/patch',
     'webpack-hot-middleware/client?reload=true',
     'whatwg-fetch',
@@ -64,6 +65,9 @@ const devConfig = merge(common, {
     historyApiFallback: true,
     hot: true,
     open: true,
+    port: 4444,
+    host: '0.0.0.0',
+    stats: "errors-only"
   },
   stats: 'errors-only',
   plugins: [

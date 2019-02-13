@@ -1,19 +1,18 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const path = require('path');
-const common = require('./webpack.common');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const webpackGlobConfig = require('./webpack.globs.js');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const theme = require(`${webpackGlobConfig.APP_DIR}/js/config/antOverride`); // eslint-disable-line
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const common = require('./webpack.common');
+const webpackGlobConfig = require('./webpack.globs.js');
+
 
 const prodConfig = merge(common, {
   mode: 'production',
@@ -22,35 +21,19 @@ const prodConfig = merge(common, {
   module: {
     rules: [
       {
-        test: /\.(css)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader']
-        })
-      },
-      {
-        test: /\.(scss)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
-      },
-      {
-        test: /\.(less)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-            {
-              loader: 'less-loader',
-              options: {
-                javascriptEnabled: true,
-                modifyVars: theme
-              }
+        test: /\.(css|scss)$/,
+        use: [
+          'style-loader',
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              // minimize: true
             }
-          ]
-        })
-      }
+          },
+          'sass-loader'
+        ]
+      },
     ]
   },
   plugins: [
@@ -71,7 +54,7 @@ const prodConfig = merge(common, {
         to: `${webpackGlobConfig.BUILD_DIR}/assets`
       }
     ]),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: 'style.css'
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
@@ -86,7 +69,8 @@ const prodConfig = merge(common, {
       }),
       new OptimizeCSSAssetsPlugin({})
     ]
-  }
+  },
+  // stats: "errors-only"
 });
 
 module.exports = prodConfig;

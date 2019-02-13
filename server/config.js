@@ -10,11 +10,11 @@ const app = {
 
 const server = {
   development: {
-    port: process.env.PORT || 8086,
+    port: process.env.PORT || 4444,
     ip: '0.0.0.0'
   },
   production: {
-    port: process.env.PORT,
+    port: process.env.PORT || 4445,
     ip: '0.0.0.0'
   }
 };

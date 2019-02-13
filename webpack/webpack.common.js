@@ -12,15 +12,14 @@ const config = {
     rules: [
       {
         test: /\.js(x)?$/,
-        include: [webpackGlobConfig.APP_DIR],
-        exclude: [path.resolve(`${__dirname}/../..`, 'node_modules')],
+        exclude: /node_modules\/(?!(auto-bind)\/).*/,
         loader: 'babel-loader',
         options: {
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/
           // directory for faster rebuilds.
           cacheDirectory: true,
-          presets: ['env', 'react']
+          presets: ['@babel/preset-env', '@babel/preset-react']
         }
       },
       {
