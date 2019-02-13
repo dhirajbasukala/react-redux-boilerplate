@@ -17,5 +17,32 @@ module.exports = {
       }
     ],
     "import/prefer-default-export": "off",
-  }
+    "react/sort-comp": [1, {
+      order: [
+        'type-annotations',
+        'static-methods',
+        'lifecycle',
+        'everything-else',
+        'render',
+      ],
+    }]
+  },
+  "parser": "babel-eslint",
+  "globals": {
+    "SyntheticEvent": true,
+    "SyntheticAnimationEvent": true,
+    "SyntheticClipboardEvent": true,
+    "SyntheticCompositionEvent": true,
+    "SyntheticInputEvent": true,
+    "SyntheticUIEvent": true,
+    "SyntheticFocusEvent": true,
+    "SyntheticKeyboardEvent": true,
+    "SyntheticMouseEvent": true,
+    "SyntheticDragEvent": true,
+    "SyntheticWheelEvent": true,
+    "SyntheticTouchEvent": true,
+    "SyntheticTransitionEvent": true,
+    "TimeoutID": true
+  },
+  
 };

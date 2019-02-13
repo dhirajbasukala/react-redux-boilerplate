@@ -1,7 +1,12 @@
+.ctrlp
 .idea/
 node_modules/
 npm-debug.log
-dist
+log/
+test/tmp/
+src/client/dist/
 .vs/
+tags
 .DS_Store
 .history
+dist/
