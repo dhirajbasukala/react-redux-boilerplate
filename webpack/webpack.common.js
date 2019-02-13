@@ -1,7 +1,6 @@
 const SimpleProgressPlugin = require('simple-progress-webpack-plugin');
-const webpackGlobConfig = require('./webpack.globs.js');
-const path = require('path');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const webpackGlobConfig = require('./webpack.globs.js');
 
 const config = {
   output: {
